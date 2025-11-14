@@ -1,0 +1,329 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    cursor: crosshair;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.background-image {
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    will-change: auto;
+}
+
+.background-image::before {
+    content: '';
+    display: none;
+}
+
+.popup-container {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.popup {
+    width: 200px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: visible;
+    position: relative;
+    z-index: 10000;
+    user-select: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    border: 3px solid #000;
+    animation: none;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+.popup-header-style {
+    width: auto !important;
+    max-width: 160px !important;
+}
+
+.popup:hover {
+    transform: scale(1.05) translateZ(0);
+    transition: transform 0.2s ease;
+}
+
+/* Popup แบบ header ธรรมดา */
+.popup-header-style {
+    border: 1px solid #ccc !important;
+}
+
+.popup-content-normal {
+    padding: 20px 8px;
+    text-align: center;
+    background: white;
+}
+
+.normal-text {
+    font-size: 38px;
+    font-weight: 900;
+    font-family: 'Arial Black', Arial, sans-serif;
+    color: #000;
+    margin: 0;
+    padding: 5px 0;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    line-height: 0.95;
+    transform: scaleY(1.4);
+    text-shadow: 
+        -2px -2px 0 #fff,
+        2px -2px 0 #fff,
+        -2px 2px 0 #fff,
+        2px 2px 0 #fff,
+        -2px 0 0 #000,
+        2px 0 0 #000,
+        0 -2px 0 #000,
+        0 2px 0 #000;
+    animation: glitchNormal 2s infinite;
+    will-change: transform;
+}
+
+@keyframes glitchNormal {
+    0%, 88% {
+        text-shadow: 
+            -2px -2px 0 #fff,
+            2px -2px 0 #fff,
+            -2px 2px 0 #fff,
+            2px 2px 0 #fff,
+            -2px 0 0 #000,
+            2px 0 0 #000,
+            0 -2px 0 #000,
+            0 2px 0 #000;
+        transform: scaleY(1.4) translate(0, 0);
+    }
+    90% {
+        text-shadow: 
+            -3px -3px 0 #fff,
+            3px -3px 0 #fff,
+            -3px 3px 0 #fff,
+            3px 3px 0 #fff,
+            -3px 0 0 #000,
+            3px 0 0 #000,
+            0 -3px 0 #000,
+            0 3px 0 #000;
+        transform: scaleY(1.4) translate(-2px, 0);
+    }
+    92% {
+        text-shadow: 
+            -2px -2px 0 #fff,
+            2px -2px 0 #fff,
+            -2px 2px 0 #fff,
+            2px 2px 0 #fff,
+            -2px 0 0 #000,
+            2px 0 0 #000,
+            0 -2px 0 #000,
+            0 2px 0 #000;
+        transform: scaleY(1.4) translate(2px, 0);
+    }
+    94% {
+        text-shadow: 
+            -3px -3px 0 #fff,
+            3px -3px 0 #fff,
+            -3px 3px 0 #fff,
+            3px 3px 0 #fff,
+            -3px 0 0 #000,
+            3px 0 0 #000,
+            0 -3px 0 #000,
+            0 3px 0 #000;
+        transform: scaleY(1.4) translate(0, -1px);
+    }
+    100% {
+        text-shadow: 
+            -2px -2px 0 #fff,
+            2px -2px 0 #fff,
+            -2px 2px 0 #fff,
+            2px 2px 0 #fff,
+            -2px 0 0 #000,
+            2px 0 0 #000,
+            0 -2px 0 #000,
+            0 2px 0 #000;
+        transform: scaleY(1.4) translate(0, 0);
+    }
+}
+
+.popup-header {
+    background: #e8e8e8;
+    padding: 3px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.popup-controls {
+    display: flex;
+    gap: 2px;
+}
+
+.control {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.control.red {
+    background: #a0a0a0;
+}
+
+.control.yellow {
+    background: #a0a0a0;
+}
+
+.control.green {
+    background: #a0a0a0;
+}
+
+.popup-url {
+    font-size: 7px;
+    color: #666;
+    background: white;
+    padding: 1px 4px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+}
+
+.popup-content {
+    padding: 5px;
+    text-align: center;
+    background: white;
+    overflow: visible;
+    position: relative;
+}
+
+.dont-text {
+    font-size: 80px;
+    font-weight: 900;
+    font-family: 'Arial Black', Arial, sans-serif;
+    color: #000;
+    margin: -20px 0;
+    padding: 0;
+    letter-spacing: -3px;
+    text-transform: uppercase;
+    line-height: 0.6;
+    transform: scaleY(1.8);
+    text-shadow: 
+        -2px -2px 0 #fff,
+        2px -2px 0 #fff,
+        -2px 2px 0 #fff,
+        2px 2px 0 #fff,
+        -3px 0 0 #000,
+        3px 0 0 #000,
+        0 -3px 0 #000,
+        0 3px 0 #000;
+    animation: glitch 1s infinite;
+    will-change: transform;
+}
+
+.cry-text {
+    font-size: 80px;
+    font-weight: 900;
+    font-family: 'Arial Black', Arial, sans-serif;
+    color: #000;
+    margin: -20px 0;
+    padding: 0;
+    letter-spacing: -3px;
+    text-transform: uppercase;
+    line-height: 0.6;
+    transform: scaleY(1.8);
+    text-shadow: 
+        -2px -2px 0 #fff,
+        2px -2px 0 #fff,
+        -2px 2px 0 #fff,
+        2px 2px 0 #fff,
+        -3px 0 0 #000,
+        3px 0 0 #000,
+        0 -3px 0 #000,
+        0 3px 0 #000;
+    animation: glitch 1s infinite 0.5s;
+    will-change: transform;
+}
+
+@keyframes glitch {
+    0%, 90% {
+        text-shadow: 
+            -2px -2px 0 #fff,
+            2px -2px 0 #fff,
+            -2px 2px 0 #fff,
+            2px 2px 0 #fff,
+            -3px 0 0 #000,
+            3px 0 0 #000,
+            0 -3px 0 #000,
+            0 3px 0 #000;
+        transform: scaleY(1.8) translate(0, 0);
+    }
+    92% {
+        text-shadow: 
+            -3px -3px 0 #fff,
+            3px -3px 0 #fff,
+            -3px 3px 0 #fff,
+            3px 3px 0 #fff,
+            -4px 0 0 #000,
+            4px 0 0 #000,
+            0 -4px 0 #000,
+            0 4px 0 #000;
+        transform: scaleY(1.8) translate(-1px, 0);
+    }
+    94% {
+        text-shadow: 
+            -2px -2px 0 #fff,
+            2px -2px 0 #fff,
+            -2px 2px 0 #fff,
+            2px 2px 0 #fff,
+            -3px 0 0 #000,
+            3px 0 0 #000,
+            0 -3px 0 #000,
+            0 3px 0 #000;
+        transform: scaleY(1.8) translate(1px, 0);
+    }
+    96% {
+        text-shadow: 
+            -3px -3px 0 #fff,
+            3px -3px 0 #fff,
+            -3px 3px 0 #fff,
+            3px 3px 0 #fff,
+            -4px 0 0 #000,
+            4px 0 0 #000,
+            0 -4px 0 #000,
+            0 4px 0 #000;
+        transform: scaleY(1.8) translate(0, 0);
+    }
+    100% {
+        text-shadow: 
+            -2px -2px 0 #fff,
+            2px -2px 0 #fff,
+            -2px 2px 0 #fff,
+            2px 2px 0 #fff,
+            -3px 0 0 #000,
+            3px 0 0 #000,
+            0 -3px 0 #000,
+            0 3px 0 #000;
+        transform: scaleY(1.8) translate(0, 0);
+    }
+}
