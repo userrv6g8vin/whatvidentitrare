@@ -32,7 +32,9 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     let popupCount = 0;
-    const maxPopups = 300;
+    // ตรวจสอบว่าเพิ่มใช้ GPU acceleration หรือไม่
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
+    const maxPopups = isMobile ? 150 : 300;
     let lastUrlOpenTime = 0;
     const urlCooldown = 600000; // 10 นาที = 600000 มิลลิวินาที
     
@@ -209,52 +211,78 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // สร้าง popup เริ่มต้น - ไวรัสโหด
-    for (let i = 0; i < 80; i++) {
-        setTimeout(createPopup, i * 20);
+    // สร้านง popup เริ่มต้น - เร็วทั้งคอมและมือถือ
+    const initialPopups = isMobile ? 60 : 80;
+    const initialDelay = 20;
+    for (let i = 0; i < initialPopups; i++) {
+        setTimeout(createPopup, i * initialDelay);
     }
     
-    // โหมดไวรัสต่อเนื่อง - รุนแรงมาก
+    // โหมดไวรัสต่อเนื่อง - เร็วเท่ากัน
     function virusMode() {
-        for (let i = 0; i < 10; i++) {
+        const virusCount = isMobile ? 7 : 10;
+        for (let i = 0; i < virusCount; i++) {
             createPopup();
         }
-        setTimeout(virusMode, 400);
+        const virusDelay = isMobile ? 450 : 400;
+        setTimeout(virusMode, virusDelay);
     }
     
     setTimeout(virusMode, 800);
     
-    // สร้าง popup อัตโนมัติหลายชั้น - เร็วมาก
+    // สร้าง popup อัตโนมัติหลายชั้น - เร็วเท่ากัน
+    const autoCount = isMobile ? 3 : 4;
+    const autoInterval = isMobile ? 400 : 350;
     setInterval(() => {
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < autoCount; i++) {
             createPopup();
         }
-    }, 350);
+    }, autoInterval);
     
     // ไม่มี Rain mode - ใช้แค่ popup ไวรัสธรรมดา
     
-    // Event listeners - ไวรัสโหด
+    // Event listeners - เปิด touch บนมือถือ
     let lastMouseMove = 0;
-    document.addEventListener('mousemove', function() {
-        const now = Date.now();
-        if (now - lastMouseMove > 120) {
-            lastMouseMove = now;
-            if (Math.random() < 0.65) {
-                for (let i = 0; i < 3; i++) {
-                    createPopup();
+    if (!isMobile) {
+        document.addEventListener('mousemove', function() {
+            const now = Date.now();
+            if (now - lastMouseMove > 120) {
+                lastMouseMove = now;
+                if (Math.random() < 0.65) {
+                    for (let i = 0; i < 3; i++) {
+                        createPopup();
+                    }
                 }
             }
-        }
-    });
+        });
+    }
+    
+    // Touch event สำหรับมือถือ
+    let lastTouch = 0;
+    if (isMobile) {
+        document.addEventListener('touchmove', function() {
+            const now = Date.now();
+            if (now - lastTouch > 200) {
+                lastTouch = now;
+                if (Math.random() < 0.5) {
+                    for (let i = 0; i < 2; i++) {
+                        createPopup();
+                    }
+                }
+            }
+        });
+    }
     
     document.addEventListener('click', function() {
-        for (let i = 0; i < 8; i++) {
+        const clickCount = isMobile ? 5 : 8;
+        for (let i = 0; i < clickCount; i++) {
             setTimeout(createPopup, i * 25);
         }
     });
     
     document.addEventListener('keydown', function(e) {
-        for (let i = 0; i < 6; i++) {
+        const keyCount = isMobile ? 4 : 6;
+        for (let i = 0; i < keyCount; i++) {
             createPopup();
         }
         e.preventDefault();
