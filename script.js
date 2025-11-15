@@ -72,11 +72,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function createPopup() {
         if (popupCount >= maxPopups) {
-            // ลบ popup เก่าทีละน้อย ไม่ใช่ทั้งกลุ่ม
+            // ลบ popup เก่าทีละน้อย เพื่อให้มี popup ใหม่ขึ้นเรื่อยๆ
             const oldPopups = document.querySelectorAll('.popup-container');
-            if (oldPopups.length > 250) {
-                // ลบทีละ 20 ตัว แทนที่จะเป็น 60
-                for (let i = 0; i < 20; i++) {
+            const deleteThreshold = isMobile ? 120 : 250;
+            const deleteCount = isMobile ? 15 : 20;
+            
+            if (oldPopups.length > deleteThreshold) {
+                // ลบ popup เก่า
+                for (let i = 0; i < deleteCount; i++) {
                     if (oldPopups[i]) {
                         oldPopups[i].style.opacity = '0';
                         oldPopups[i].style.transition = 'opacity 0.3s';
@@ -85,7 +88,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         }, 300);
                     }
                 }
-                popupCount -= 20;
+                popupCount -= deleteCount;
+            } else {
+                // ถ้ายังไม่ถึง threshold ก็ลบเลยเพื่อให้มี popup ใหม่
+                if (oldPopups[0]) {
+                    oldPopups[0].style.opacity = '0';
+                    oldPopups[0].style.transition = 'opacity 0.2s';
+                    setTimeout(() => {
+                        if (oldPopups[0]) oldPopups[0].remove();
+                    }, 200);
+                }
+                popupCount -= 1;
             }
             return;
         }
